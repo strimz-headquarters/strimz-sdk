@@ -4,8 +4,8 @@ import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import { Toaster } from 'sonner';
 
 export const metadata = getMetadata({
-  title: "Strimz Subscriptions and Payments Gateway",
-  description: "Strimz Subscriptions is a DeFi utility that automates crypto payments for Web2 subscriptions and services via Strimz SDK, enabling seamless, secure, and efficient management of recurring payments with fiat.",
+  title: "Strimz Payment Gateway SDK - Accept Crypto for Subscriptions",
+  description: "Integrate Strimz SDK to accept cryptocurrency payments for subscriptions and recurring services. Enable your users to pay with crypto while you receive fiat. Seamless DeFi payment infrastructure for developers.",
 })
 
 /**

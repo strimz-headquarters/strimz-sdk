@@ -28,7 +28,7 @@ const HeroSection = () => {
     return (
         <>
             <section className='w-full min-h-screen lg:pt-[44px] pt-[36px] overflow-x-hidden bg-white'>
-                <main className="max-w-[750px] mx-auto w-full flex flex-col items-center gap-6 px-4">
+                <main className="max-w-[900px] mx-auto w-full flex flex-col items-center gap-6 px-4">
                     {/* top section */}
                     <div className='w-full h-[580px] md:h-auto relative flex flex-col items-center justify-start'>
                         {/* Waves 1 */}
@@ -69,8 +69,8 @@ const HeroSection = () => {
 
                         {/* group of text */}
                         <div className='absolute bottom-0 inset-x-0 w-full bg-gradient-to-b from-white/0 to-white flex flex-col items-center gap-4'>
-                            <h1 className="font-sora font-[700] lg:text-[60px] md:text-[56px] text-[40px] lg:leading-[64px] md:leading-[56px] leading-[48px] text-primary text-center">Pay for subscriptions & utilities, with Crypto</h1>
-                            <p className="text-[#58556A] font-poppins font-[400] text-base text-center">Skip the hassle of fiat payments. Use your crypto to pay for subscriptions, utilities, and airtime instantly, anytime, from anywhere.</p>
+                            <h1 className="font-sora font-[700] lg:text-[56px] md:text-[56px] text-[40px] lg:leading-[64px] md:leading-[56px] leading-[48px] text-primary text-center">Accept Crypto Payments for Subscriptions & Utilities</h1>
+                            <p className="text-[#58556A] font-poppins font-[400] text-base text-center">Integrate Strimz SDK to enable your users to pay for subscriptions and utilities with cryptocurrency. Automated, secure, and compliant.</p>
                             <InteractiveHoverButton
                                 type='button'
                                 onClick={() => router.push("/login")}
