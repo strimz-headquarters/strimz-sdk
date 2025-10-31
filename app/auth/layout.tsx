@@ -1,26 +1,26 @@
-import ResetPasswordForm from "@/components/auth/ResetPassword";
 import Logo from "@/components/shared/Logo";
 import StrimzLogo from "@/public/logo/whiteLogo.png"
 import authPattern from "@/public/patterns/authPattern.png"
 import authPattern2 from "@/public/patterns/authPattern2.png"
 import Image from "next/image";
-
 /**
- * Renders the reset password page layout.
+ * The AuthLayout component renders a basic layout for authentication pages.
+ * It is a functional component that accepts a single prop, "children", which
+ * is a React node that contains the content to be rendered within the layout.
  *
- * The page is divided into two sections:
- * 1. A left section that is visible on medium to large screens, which includes 
- *    the Strimz logo, a heading, a subheading, and decorative background patterns.
- * 2. A right section that contains the `ResetPasswordForm` component, which allows 
- *    users to enter their email to reset their password.
+ * The component wraps the content in a section element with a class of "w-full".
+ * This results in the content being displayed in a full-width container.
  *
- * The layout is responsive, with the left section being hidden on smaller screens,
- * and the right section occupying the full width.
- *
- * @returns A JSX element representing the reset password page.
+ * @param {{ children: React.ReactNode }} props The props for the component.
+ * @prop {React.ReactNode} children The content to be rendered within the layout.
+ * @returns {JSX.Element} The rendered component.
  */
+export default function AuthLayout({
+    children,
+}: Readonly<{
+    children: React.ReactNode;
+}>) {
 
-export default function ResetPassword() {
     return (
         <main className="w-full min-h-screen grid md:grid-cols-8 px-5 md:px-0">
             <section className="md:col-span-3 hidden md:flex flex-col bg-[#050020] overflow-hidden relative lg:pt-12 pt-8 lg:px-12 px-6 gap-16">
@@ -34,9 +34,7 @@ export default function ResetPassword() {
                     <Image src={authPattern2} className="w-[278.05px] -ml-20 h-[225.76px]" alt="pattern" width={1107} height={740} priority quality={100} />
                 </div>
             </section>
-            <section className="md:col-span-5 flex justify-center items-center bg-[#F9FAFB]">
-                <ResetPasswordForm />
-            </section>
+            {children}
         </main>
-    )
+    );
 }
