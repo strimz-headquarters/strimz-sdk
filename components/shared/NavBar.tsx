@@ -71,7 +71,7 @@ const NavBar = () => {
                     <div className='flex items-center gap-[24px]'>
                         <InteractiveHoverButton
                             type='button'
-                            onClick={() => router.push("/login")}
+                            onClick={() => router.push("/auth")}
                             icon={<LogIn className="h-4 w-4" />}
                             innerClassName='bg-accent rounded-[8px]'
                             className='w-[120px] h-[40px] flex justify-center items-center bg-[#F9FAFB] rounded-[8px] cursor-pointer text-[14px] font-[500] font-poppins transition-all duration-300 text-primary hover:text-white shadow-navCTA'>Login</InteractiveHoverButton>

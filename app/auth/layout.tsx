@@ -27,7 +27,7 @@ export default function AuthLayout({
                 <Logo href='/' className='w-[101px]' image={StrimzLogo} />
                 <div className="lg:w-[337px] flex flex-col gap-2">
                     <h3 className="text-[40px] leading-[48px] font-[700] font-sora text-white">Streamline payments anytime ⚡</h3>
-                    <p className="text-base font-[400] font-poppins text-[#8E8C9C]">Log in to manage your subscriptions with ease.</p>
+                    <p className="text-base font-[400] font-poppins text-[#8E8C9C]">Log in to manage your payments/subscriptions with ease.</p>
                 </div>
                 <div className="absolute lg:left-0 -left-12 lg:bottom-0 -bottom-12 flex">
                     <Image src={authPattern} className="w-[278.05px] h-[225.76px]" alt="pattern" width={1258} height={740} priority quality={100} />

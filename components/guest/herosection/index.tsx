@@ -73,7 +73,7 @@ const HeroSection = () => {
                             <p className="text-[#58556A] font-poppins font-[400] text-base text-center">Integrate Strimz SDK to enable your users to pay for subscriptions and utilities with cryptocurrency. Automated, secure, and compliant.</p>
                             <InteractiveHoverButton
                                 type='button'
-                                onClick={() => router.push("/login")}
+                                onClick={() => router.push("/auth")}
                                 icon={<MoveRight className="w-5 h-5" />}
                                 innerClassName='bg-accent rounded-[8px]'
                                 className='w-[150px] h-[48px] flex justify-center items-center bg-accent rounded-[8px] cursor-pointer text-[14px] font-[500] font-poppins text-white hover:text-white shadow-ctaShadow'>
