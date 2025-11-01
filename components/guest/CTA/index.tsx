@@ -33,7 +33,7 @@ const CTA = () => {
                     <p className='w-full max-w-[522px] font-poppins text-white font-[400] text-base leading-[28px] text-center'>Fast, secure, and hassle-free payments for streaming services, utilities, and mobile airtime. crypto payments made easy. </p>
                     <InteractiveHoverButton
                         type='button'
-                        onClick={() => router.push("/login")}
+                        onClick={() => router.push("/auth")}
                         icon={<MoveRight className="w-5 h-5" />}
                         innerClassName='bg-white rounded-[8px]'
                         className='w-[150px] h-[48px] flex justify-center items-center bg-accent rounded-[8px] cursor-pointer text-[14px] font-[500] font-poppins text-white hover:text-primary shadow-ctaShadow'>
