@@ -17,7 +17,7 @@ import type {
 // Button Props
 // ============================================================================
 
-export interface StrimzButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
+export interface StrimzButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick' | 'onError'> {
   // Payment configuration
   amount: number
   paymentType: PaymentType
@@ -130,7 +130,7 @@ export const StrimzButton: React.FC<StrimzButtonProps> = ({
     fontWeight: 600,
     borderRadius: '8px',
     border: 'none',
-    backgroundColor: '#6366f1',
+    backgroundColor: '#02c76a',
     color: 'white',
     cursor: isLoading || disabled ? 'not-allowed' : 'pointer',
     opacity: isLoading || disabled ? 0.6 : 1,
