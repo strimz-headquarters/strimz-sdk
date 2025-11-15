@@ -7,80 +7,80 @@
 // Environment & Configuration Types
 // ============================================================================
 
-export type Environment = 'live' | 'test'
+export type Environment = "live" | "test";
 
 export interface SDKConfig {
-  publicKey: string
-  environment?: Environment
-  debug?: boolean
-  apiUrl?: string
+  publicKey: string;
+  environment?: Environment;
+  debug?: boolean;
+  apiUrl?: string;
 }
 
 export interface ServerSDKConfig {
-  secretKey: string
-  environment?: Environment
-  apiUrl?: string
+  secretKey: string;
+  environment?: Environment;
+  apiUrl?: string;
 }
 
 // ============================================================================
 // Payment Types
 // ============================================================================
 
-export type PaymentType = 'one-time' | 'subscription'
+export type PaymentType = "one-time" | "subscription";
 
-export type SubscriptionInterval = 'daily' | 'weekly' | 'monthly' | 'yearly'
+export type SubscriptionInterval = "daily" | "weekly" | "monthly" | "yearly";
 
-export type Currency = 'USD'
+export type Currency = "USD";
 
-export type PaymentStatus = 'success' | 'failed' | 'pending' | 'cancelled'
+export type PaymentStatus = "success" | "failed" | "pending" | "cancelled";
 
 // ============================================================================
 // Payment Options
 // ============================================================================
 
 export interface BasePaymentOptions {
-  amount: number
-  currency: Currency
-  customerEmail?: string
-  successUrl: string
-  cancelUrl: string
-  metadata?: Record<string, any>
+  amount: number;
+  currency: Currency;
+  customerEmail?: string;
+  successUrl: string;
+  cancelUrl: string;
+  metadata?: Record<string, any>;
 }
 
 export interface OneTimePaymentOptions extends BasePaymentOptions {
-  paymentType: 'one-time'
-  metadata?: OneTimePaymentMetadata
+  paymentType: "one-time";
+  metadata?: OneTimePaymentMetadata;
 }
 
 export interface SubscriptionPaymentOptions extends BasePaymentOptions {
-  paymentType: 'subscription'
-  interval: SubscriptionInterval
-  metadata?: SubscriptionMetadata
+  paymentType: "subscription";
+  interval: SubscriptionInterval;
+  metadata?: SubscriptionMetadata;
 }
 
-export type PaymentOptions = OneTimePaymentOptions | SubscriptionPaymentOptions
+export type PaymentOptions = OneTimePaymentOptions | SubscriptionPaymentOptions;
 
 // ============================================================================
 // Metadata Types
 // ============================================================================
 
 export interface OneTimePaymentMetadata {
-  orderId?: string
-  productId?: string
-  productName?: string
-  quantity?: number
-  userId?: string
-  [key: string]: any
+  orderId?: string;
+  productId?: string;
+  productName?: string;
+  quantity?: number;
+  userId?: string;
+  [key: string]: any;
 }
 
 export interface SubscriptionMetadata {
-  planId: string
-  planName: string
-  userId: string
-  trialDays?: number
-  startDate?: string
-  customFields?: Record<string, any>
-  [key: string]: any
+  planId: string;
+  planName: string;
+  userId: string;
+  trialDays?: number;
+  startDate?: string;
+  customFields?: Record<string, any>;
+  [key: string]: any;
 }
 
 // ============================================================================
@@ -88,15 +88,15 @@ export interface SubscriptionMetadata {
 // ============================================================================
 
 export interface PaymentSession {
-  id: string
-  checkoutUrl: string
-  expiresAt: string
-  publicKey: string
-  amount: number
-  currency: Currency
-  paymentType: PaymentType
-  interval?: SubscriptionInterval
-  metadata?: Record<string, any>
+  id: string;
+  checkoutUrl: string;
+  expiresAt: string;
+  publicKey: string;
+  amount: number;
+  currency: Currency;
+  paymentType: PaymentType;
+  interval?: SubscriptionInterval;
+  metadata?: Record<string, any>;
 }
 
 // ============================================================================
@@ -104,20 +104,20 @@ export interface PaymentSession {
 // ============================================================================
 
 export interface Transaction {
-  id: string
-  status: PaymentStatus
-  amount: number
-  currency: Currency
-  paymentType: PaymentType
-  interval?: SubscriptionInterval
-  subscriptionId?: string
-  nextBillingDate?: string
-  customerEmail: string
-  metadata?: Record<string, any>
-  createdAt: string
-  updatedAt: string
-  transactionHash?: string
-  walletAddress?: string
+  id: string;
+  status: PaymentStatus;
+  amount: number;
+  currency: Currency;
+  paymentType: PaymentType;
+  interval?: SubscriptionInterval;
+  subscriptionId?: string;
+  nextBillingDate?: string;
+  customerEmail: string;
+  metadata?: Record<string, any>;
+  createdAt: string;
+  updatedAt: string;
+  transactionHash?: string;
+  walletAddress?: string;
 }
 
 // ============================================================================
@@ -125,12 +125,12 @@ export interface Transaction {
 // ============================================================================
 
 export interface PaymentResult {
-  status: PaymentStatus
-  paymentId?: string
-  transactionId?: string
-  subscriptionId?: string
-  message?: string
-  sessionId?: string
+  status: PaymentStatus;
+  paymentId?: string;
+  transactionId?: string;
+  subscriptionId?: string;
+  message?: string;
+  sessionId?: string;
 }
 
 // ============================================================================
@@ -138,28 +138,28 @@ export interface PaymentResult {
 // ============================================================================
 
 export type WebhookEventType =
-  | 'payment.success'
-  | 'payment.failed'
-  | 'payment.pending'
-  | 'subscription.created'
-  | 'subscription.cancelled'
-  | 'subscription.renewed'
-  | 'subscription.failed'
+  | "payment.success"
+  | "payment.failed"
+  | "payment.pending"
+  | "subscription.created"
+  | "subscription.cancelled"
+  | "subscription.renewed"
+  | "subscription.failed";
 
 export interface WebhookEvent<T = any> {
-  id: string
-  type: WebhookEventType
-  data: T
-  createdAt: string
-  livemode: boolean
+  id: string;
+  type: WebhookEventType;
+  data: T;
+  createdAt: string;
+  livemode: boolean;
 }
 
 export interface PaymentWebhookData {
-  payment: Transaction
+  payment: Transaction;
 }
 
 export interface SubscriptionWebhookData {
-  subscription: Subscription
+  subscription: Subscription;
 }
 
 // ============================================================================
@@ -167,19 +167,19 @@ export interface SubscriptionWebhookData {
 // ============================================================================
 
 export interface Subscription {
-  id: string
-  status: 'active' | 'cancelled' | 'past_due' | 'paused'
-  interval: SubscriptionInterval
-  amount: number
-  currency: Currency
-  customerEmail: string
-  currentPeriodStart: string
-  currentPeriodEnd: string
-  nextBillingDate: string
-  cancelAtPeriodEnd: boolean
-  metadata?: SubscriptionMetadata
-  createdAt: string
-  updatedAt: string
+  id: string;
+  status: "active" | "cancelled" | "past_due" | "paused";
+  interval: SubscriptionInterval;
+  amount: number;
+  currency: Currency;
+  customerEmail: string;
+  currentPeriodStart: string;
+  currentPeriodEnd: string;
+  nextBillingDate: string;
+  cancelAtPeriodEnd: boolean;
+  metadata?: SubscriptionMetadata;
+  createdAt: string;
+  updatedAt: string;
 }
 
 // ============================================================================
@@ -187,15 +187,15 @@ export interface Subscription {
 // ============================================================================
 
 export interface APIResponse<T = any> {
-  success: boolean
-  data?: T
-  error?: APIError
+  success: boolean;
+  data?: T;
+  error?: APIError;
 }
 
 export interface APIError {
-  code: string
-  message: string
-  details?: Record<string, any>
+  code: string;
+  message: string;
+  details?: Record<string, any>;
 }
 
 // ============================================================================
@@ -203,23 +203,27 @@ export interface APIError {
 // ============================================================================
 
 export interface StrimzProviderProps {
-  publicKey: string
-  environment?: Environment
-  children: React.ReactNode
+  publicKey: string;
+  environment?: Environment;
+  children: React.ReactNode;
 }
 
-export interface StrimzButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
-  amount: number
-  paymentType: PaymentType
-  interval?: SubscriptionInterval
-  currency?: Currency
-  customerEmail?: string
-  successUrl: string
-  cancelUrl: string
-  metadata?: Record<string, any>
-  onSessionCreated?: (session: PaymentSession) => void
-  onError?: (error: Error) => void
-  loading?: boolean
+export interface StrimzButtonProps
+  extends Omit<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    "onClick" | "onError"
+  > {
+  amount: number;
+  paymentType: PaymentType;
+  interval?: SubscriptionInterval;
+  currency?: Currency;
+  customerEmail?: string;
+  successUrl: string;
+  cancelUrl: string;
+  metadata?: Record<string, any>;
+  onSessionCreated?: (session: PaymentSession) => void;
+  onError?: (error: Error) => void;
+  loading?: boolean;
 }
 
 // ============================================================================
@@ -227,7 +231,7 @@ export interface StrimzButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLB
 // ============================================================================
 
 export interface ValidationResult {
-  success: boolean
-  error?: string
-  data?: any
+  success: boolean;
+  error?: string;
+  data?: any;
 }
