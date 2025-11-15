@@ -15,10 +15,9 @@ import {
   createError,
   NetworkError,
   AuthenticationError,
-  RateLimitError,
   StrimzError
 } from '../utils/errors'
-import { getApiUrl, buildApiEndpoint } from '../utils/url'
+import { getApiUrl } from '../utils/url'
 
 // ============================================================================
 // API Client Configuration

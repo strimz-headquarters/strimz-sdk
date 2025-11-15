@@ -3,55 +3,57 @@
  * Modular validation functions using Zod schemas
  */
 
-import { z } from 'zod'
+import { z } from "zod";
 import type {
   PaymentOptions,
   SDKConfig,
   ServerSDKConfig,
-  ValidationResult
-} from '../types'
-import { createError } from './errors'
+  ValidationResult,
+} from "../types";
+import { createError } from "./errors";
 
 // ============================================================================
 // Zod Schemas
 // ============================================================================
 
-const environmentSchema = z.enum(['live', 'test'])
+const environmentSchema = z.enum(["live", "test"]);
 
-const currencySchema = z.enum(['USD'])
+const currencySchema = z.enum(["USD"]);
 
-const paymentTypeSchema = z.enum(['one-time', 'subscription'])
+const paymentTypeSchema = z.enum(["one-time", "subscription"]);
 
-const subscriptionIntervalSchema = z.enum(['daily', 'weekly', 'monthly', 'yearly'])
+const subscriptionIntervalSchema = z.enum([
+  "daily",
+  "weekly",
+  "monthly",
+  "yearly",
+]);
 
 const amountSchema = z
   .number()
-  .min(100, 'Amount must be at least $1 (100 cents)')
-  .max(1000000, 'Amount cannot exceed $10,000 (1,000,000 cents)')
-  .int('Amount must be an integer (cents)')
+  .min(100, "Amount must be at least $1 (100 cents)")
+  .max(1000000, "Amount cannot exceed $10,000 (1,000,000 cents)")
+  .int("Amount must be an integer (cents)");
 
-const emailSchema = z.string().email('Invalid email format').optional()
+const emailSchema = z.string().email("Invalid email format").optional();
 
 const urlSchema = z
   .string()
-  .url('Invalid URL format')
-  .refine((url) => url.startsWith('https://'), {
-    message: 'URL must use HTTPS protocol'
-  })
+  .url("Invalid URL format")
+  .refine((url) => url.startsWith("https://"), {
+    message: "URL must use HTTPS protocol",
+  });
 
 const publicKeySchema = z
   .string()
   .refine(
-    (key) => key.startsWith('STRZlive_') || key.startsWith('STRZtest_'),
-    'Public key must start with STRZlive_ or STRZtest_'
-  )
+    (key) => key.startsWith("STRZlive_") || key.startsWith("STRZtest_"),
+    "Public key must start with STRZlive_ or STRZtest_"
+  );
 
 const secretKeySchema = z
   .string()
-  .refine(
-    (key) => key.startsWith('STRZ_'),
-    'Secret key must start with STRZ_'
-  )
+  .refine((key) => key.startsWith("STRZ_"), "Secret key must start with STRZ_");
 
 // ============================================================================
 // SDK Config Schemas
@@ -61,14 +63,14 @@ const sdkConfigSchema = z.object({
   publicKey: publicKeySchema,
   environment: environmentSchema.optional(),
   debug: z.boolean().optional(),
-  apiUrl: z.string().url().optional()
-})
+  apiUrl: z.string().url().optional(),
+});
 
 const serverSDKConfigSchema = z.object({
   secretKey: secretKeySchema,
   environment: environmentSchema.optional(),
-  apiUrl: z.string().url().optional()
-})
+  apiUrl: z.string().url().optional(),
+});
 
 // ============================================================================
 // Payment Options Schemas
@@ -80,22 +82,22 @@ const basePaymentOptionsSchema = z.object({
   customerEmail: emailSchema,
   successUrl: urlSchema,
   cancelUrl: urlSchema,
-  metadata: z.record(z.any()).optional()
-})
+  metadata: z.record(z.string(), z.any()).optional(),
+});
 
 const oneTimePaymentOptionsSchema = basePaymentOptionsSchema.extend({
-  paymentType: z.literal('one-time')
-})
+  paymentType: z.literal("one-time"),
+});
 
 const subscriptionPaymentOptionsSchema = basePaymentOptionsSchema.extend({
-  paymentType: z.literal('subscription'),
-  interval: subscriptionIntervalSchema
-})
+  paymentType: z.literal("subscription"),
+  interval: subscriptionIntervalSchema,
+});
 
-const paymentOptionsSchema = z.discriminatedUnion('paymentType', [
+const paymentOptionsSchema = z.discriminatedUnion("paymentType", [
   oneTimePaymentOptionsSchema,
-  subscriptionPaymentOptionsSchema
-])
+  subscriptionPaymentOptionsSchema,
+]);
 
 // ============================================================================
 // Validation Functions
@@ -107,20 +109,20 @@ export const validate = {
    */
   sdkConfig: (config: SDKConfig): ValidationResult => {
     try {
-      const validated = sdkConfigSchema.parse(config)
-      return { success: true, data: validated }
+      const validated = sdkConfigSchema.parse(config);
+      return { success: true, data: validated };
     } catch (error) {
       if (error instanceof z.ZodError) {
-        const firstError = error.errors[0]
+        const firstError = (error as z.ZodError).issues[0];
         return {
           success: false,
-          error: firstError.message
-        }
+          error: firstError.message,
+        };
       }
       return {
         success: false,
-        error: 'Invalid configuration'
-      }
+        error: "Invalid configuration",
+      };
     }
   },
 
@@ -129,20 +131,20 @@ export const validate = {
    */
   serverConfig: (config: ServerSDKConfig): ValidationResult => {
     try {
-      const validated = serverSDKConfigSchema.parse(config)
-      return { success: true, data: validated }
+      const validated = serverSDKConfigSchema.parse(config);
+      return { success: true, data: validated };
     } catch (error) {
       if (error instanceof z.ZodError) {
-        const firstError = error.errors[0]
+        const firstError = (error as z.ZodError).issues[0];
         return {
           success: false,
-          error: firstError.message
-        }
+          error: firstError.message,
+        };
       }
       return {
         success: false,
-        error: 'Invalid server configuration'
-      }
+        error: "Invalid server configuration",
+      };
     }
   },
 
@@ -151,20 +153,20 @@ export const validate = {
    */
   paymentOptions: (options: PaymentOptions): ValidationResult => {
     try {
-      const validated = paymentOptionsSchema.parse(options)
-      return { success: true, data: validated }
+      const validated = paymentOptionsSchema.parse(options);
+      return { success: true, data: validated };
     } catch (error) {
       if (error instanceof z.ZodError) {
-        const firstError = error.errors[0]
+        const firstError = (error as z.ZodError).issues[0];
         return {
           success: false,
-          error: firstError.message
-        }
+          error: firstError.message,
+        };
       }
       return {
         success: false,
-        error: 'Invalid payment options'
-      }
+        error: "Invalid payment options",
+      };
     }
   },
 
@@ -172,9 +174,9 @@ export const validate = {
    * Validate amount
    */
   amount: (amount: number): void => {
-    const result = amountSchema.safeParse(amount)
+    const result = amountSchema.safeParse(amount);
     if (!result.success) {
-      throw createError.invalidAmount(amount)
+      throw createError.invalidAmount(amount);
     }
   },
 
@@ -182,9 +184,9 @@ export const validate = {
    * Validate payment type
    */
   paymentType: (type: string): void => {
-    const result = paymentTypeSchema.safeParse(type)
+    const result = paymentTypeSchema.safeParse(type);
     if (!result.success) {
-      throw createError.invalidPaymentType(type)
+      throw createError.invalidPaymentType(type);
     }
   },
 
@@ -192,9 +194,9 @@ export const validate = {
    * Validate subscription interval
    */
   interval: (interval: string): void => {
-    const result = subscriptionIntervalSchema.safeParse(interval)
+    const result = subscriptionIntervalSchema.safeParse(interval);
     if (!result.success) {
-      throw createError.invalidInterval(interval)
+      throw createError.invalidInterval(interval);
     }
   },
 
@@ -202,19 +204,19 @@ export const validate = {
    * Validate email
    */
   email: (email: string): void => {
-    const result = emailSchema.safeParse(email)
+    const result = emailSchema.safeParse(email);
     if (!result.success) {
-      throw createError.invalidEmail(email)
+      throw createError.invalidEmail(email);
     }
   },
 
   /**
    * Validate URL
    */
-  url: (url: string, field: 'successUrl' | 'cancelUrl'): void => {
-    const result = urlSchema.safeParse(url)
+  url: (url: string, field: "successUrl" | "cancelUrl"): void => {
+    const result = urlSchema.safeParse(url);
     if (!result.success) {
-      throw createError.invalidUrl(field, url)
+      throw createError.invalidUrl(field, url);
     }
   },
 
@@ -222,9 +224,9 @@ export const validate = {
    * Validate public key
    */
   publicKey: (key: string): void => {
-    const result = publicKeySchema.safeParse(key)
+    const result = publicKeySchema.safeParse(key);
     if (!result.success) {
-      throw createError.invalidApiKey('public')
+      throw createError.invalidApiKey("public");
     }
   },
 
@@ -232,12 +234,12 @@ export const validate = {
    * Validate secret key
    */
   secretKey: (key: string): void => {
-    const result = secretKeySchema.safeParse(key)
+    const result = secretKeySchema.safeParse(key);
     if (!result.success) {
-      throw createError.invalidApiKey('secret')
+      throw createError.invalidApiKey("secret");
     }
-  }
-}
+  },
+};
 
 // ============================================================================
 // Helper Functions
@@ -247,38 +249,42 @@ export const validate = {
  * Check if payment options require subscription interval
  */
 export const requiresInterval = (options: PaymentOptions): boolean => {
-  return options.paymentType === 'subscription'
-}
+  return options.paymentType === "subscription";
+};
 
 /**
  * Validate payment options and throw on error
  */
-export const validatePaymentOptionsOrThrow = (options: PaymentOptions): void => {
-  const result = validate.paymentOptions(options)
+export const validatePaymentOptionsOrThrow = (
+  options: PaymentOptions
+): void => {
+  const result = validate.paymentOptions(options);
   if (!result.success) {
-    throw new Error(result.error)
+    throw new Error(result.error);
   }
 
   // Additional check for subscription interval
-  if (options.paymentType === 'subscription' && !options.interval) {
-    throw createError.missingInterval()
+  if (options.paymentType === "subscription" && !options.interval) {
+    throw createError.missingInterval();
   }
-}
+};
 
 /**
  * Sanitize metadata to remove any potentially harmful data
  */
-export const sanitizeMetadata = (metadata?: Record<string, any>): Record<string, any> | undefined => {
-  if (!metadata) return undefined
+export const sanitizeMetadata = (
+  metadata?: Record<string, any>
+): Record<string, any> | undefined => {
+  if (!metadata) return undefined;
 
   // Remove any functions or symbols
-  const sanitized: Record<string, any> = {}
+  const sanitized: Record<string, any> = {};
 
   for (const [key, value] of Object.entries(metadata)) {
-    if (typeof value !== 'function' && typeof value !== 'symbol') {
-      sanitized[key] = value
+    if (typeof value !== "function" && typeof value !== "symbol") {
+      sanitized[key] = value;
     }
   }
 
-  return sanitized
-}
+  return sanitized;
+};
